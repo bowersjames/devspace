@@ -723,7 +723,6 @@ function createMcpServer(
       const stats = countDiffStats(
         response.details?.patch ?? response.details?.diff,
       );
-      const diffText = response.details?.patch ?? response.details?.diff ?? "";
       const storedResult = results.put({
         workspaceId,
         workspaceRoot: workspace.root,
@@ -739,10 +738,7 @@ function createMcpServer(
           patch: response.details?.patch,
         },
       });
-      const editResultText = [
-        `Edited ${input.path} (+${stats.additions} -${stats.removals}). Diff available in the UI as ${storedResult.id}.`,
-        diffText ? `\nUnified diff:\n${diffText}` : "",
-      ].join("");
+      const editResultText = `Edited ${input.path} (+${stats.additions} -${stats.removals}). Diff available in the UI as ${storedResult.id}.`;
       const editContent = [
         textBlock(editResultText),
         ...(agentsNotice ? [textBlock(agentsNotice)] : []),
