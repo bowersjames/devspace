@@ -350,7 +350,7 @@ function createMcpServer(
         path: z
           .string()
           .describe(
-            "Absolute path to a local project directory inside an allowed root.",
+            "Absolute path, or a leading-tilde home path such as ~/project, to a local project directory inside an allowed root.",
           ),
       },
       outputSchema: {

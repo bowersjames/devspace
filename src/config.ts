@@ -1,5 +1,6 @@
 import { homedir } from "node:os";
 import { join, resolve } from "node:path";
+import { expandHomePath } from "./roots.js";
 
 export interface ServerConfig {
   host: string;
@@ -31,7 +32,7 @@ function parseAllowedRoots(value: string | undefined): string[] {
       .filter(Boolean) ?? [];
 
   const roots = rawRoots.length > 0 ? rawRoots : [process.cwd()];
-  return roots.map((root) => resolve(root));
+  return roots.map((root) => resolve(expandHomePath(root)));
 }
 
 function parseAllowedHosts(value: string | undefined): string[] {

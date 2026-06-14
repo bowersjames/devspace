@@ -41,9 +41,11 @@ Call `open_workspace` before using the coding tools:
 
 ```json
 {
-  "path": "/home/waishnav/personal/pi-on-mcp"
+  "path": "~/personal/pi-on-mcp"
 }
 ```
+
+Absolute paths such as `/home/waishnav/personal/pi-on-mcp` are also supported.
 
 The result includes a `workspaceId`. Use that `workspaceId` for subsequent
 calls:

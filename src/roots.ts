@@ -1,3 +1,4 @@
+import { homedir } from "node:os";
 import { relative, resolve, sep } from "node:path";
 
 export class AccessDeniedError extends Error {
@@ -7,9 +8,18 @@ export class AccessDeniedError extends Error {
   }
 }
 
+export function expandHomePath(path: string): string {
+  if (path === "~") return homedir();
+  if (path.startsWith("~/") || path.startsWith("~\\")) {
+    return resolve(homedir(), path.slice(2));
+  }
+
+  return path;
+}
+
 export function isPathInsideRoot(path: string, root: string): boolean {
-  const resolvedPath = resolve(path);
-  const resolvedRoot = resolve(root);
+  const resolvedPath = resolve(expandHomePath(path));
+  const resolvedRoot = resolve(expandHomePath(root));
   const relationship = relative(resolvedRoot, resolvedPath);
 
   return (
@@ -19,7 +29,7 @@ export function isPathInsideRoot(path: string, root: string): boolean {
 }
 
 export function assertAllowedPath(path: string, allowedRoots: string[]): string {
-  const resolvedPath = resolve(path);
+  const resolvedPath = resolve(expandHomePath(path));
   if (allowedRoots.some((root) => isPathInsideRoot(resolvedPath, root))) {
     return resolvedPath;
   }
