@@ -59,7 +59,7 @@ function createMcpServer(config: ServerConfig): McpServer {
             {
               name: "pi-on-mcp",
               allowedRoots: config.allowedRoots,
-              mutationToolsEnabled: false,
+              mutationToolsEnabled: true,
             },
             null,
             2,

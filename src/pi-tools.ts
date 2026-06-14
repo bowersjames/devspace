@@ -107,6 +107,7 @@ export async function grepFilesTool(
   config: ServerConfig,
 ): Promise<{ content: McpContent[]; isError?: boolean }> {
   const cwd = resolveToolCwd(input.cwd, config);
+  if (input.path) resolveAllowedPath(input.path, cwd, config.allowedRoots);
   const tool = createGrepTool(cwd);
 
   return runTool((params) => tool.execute("grep_files", params), input);
@@ -117,6 +118,7 @@ export async function findFilesTool(
   config: ServerConfig,
 ): Promise<{ content: McpContent[]; isError?: boolean }> {
   const cwd = resolveToolCwd(input.cwd, config);
+  if (input.path) resolveAllowedPath(input.path, cwd, config.allowedRoots);
   const tool = createFindTool(cwd);
 
   return runTool((params) => tool.execute("find_files", params), input);
@@ -127,6 +129,7 @@ export async function listDirectoryTool(
   config: ServerConfig,
 ): Promise<{ content: McpContent[]; isError?: boolean }> {
   const cwd = resolveToolCwd(input.cwd, config);
+  if (input.path) resolveAllowedPath(input.path, cwd, config.allowedRoots);
   const tool = createLsTool(cwd);
 
   return runTool((params) => tool.execute("list_directory", params), input);
